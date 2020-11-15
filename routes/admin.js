@@ -70,7 +70,7 @@ module.exports = (app, pool) => {
       }
       else {
         console.log(req.user);
-        res.render('dashboard.ejs', { userData: req.user });
+        res.render('dashboard.ejs', { userData: req.user.role });
         return;
       }
 

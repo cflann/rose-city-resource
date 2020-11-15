@@ -188,13 +188,19 @@
         font-size: 17px;
         ">
         Change Password</a> |
-      <a href="/admin/register"
-        style="
-        text-align: center;
-        padding: 10px 16px;
-        font-size: 17px;
-        ">
-        Create User</a> |
+      <!-- if user is an admin, they can register new users   -->
+      <% if(userData && userData === "admin") { %>
+        <span class="createUserSpan" id="createUserSpan" >
+          <a href="/admin/register"
+            style="
+            text-align: center;
+            padding: 10px 16px;
+            font-size: 17px;
+            ">
+            Create User</a> |
+        </span> 
+      <% } %> 
+
       <a href="/admin/logout"
         style="
         text-align: center;
@@ -250,6 +256,7 @@
     </table>
   </details>
   <script>
+
     (async () => {
       /* One-time Updates on page load */
 
