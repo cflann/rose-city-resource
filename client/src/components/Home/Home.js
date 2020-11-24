@@ -7,8 +7,7 @@ import './../../css/Home.css';
 const BasicInstructions = props => {
   return (
     <div className="basic-instructions">
-      Find reduced cost or free services in Multnomah, Washington and Clackamas
-      counties.
+      Find community events, workforce development and funding opportunities in Portland's neighborhoods
     </div>
   );
 };

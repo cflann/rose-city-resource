@@ -38,30 +38,7 @@ async function initialize(passport, pool) {
     )
   );
 
-  // passport.use(new LocalStrategy({
-  //   usernameField: "email", passwordField: "password", roleField: 'role' , passReqToCallback: true,
-  // },
-  //   function(username, password, role, done) {
-  //     User.findOne({ username: username }, function (err, user) {
-  //       if (err) { return done(err); }
-  //       if (!user) { return done(null, false); }
-  //       if (!user.verifyPassword(password)) { return done(null, false); }
-  //       return done(null, user);
-  //     });
-  //   }
-  // ));
-
-
-
-
-  // Stores user details inside session. serializeUser determines which data of the user
-  // object should be stored in the session. The result of the serializeUser method is attached
-  // to the session as req.session.passport.user = {}. Here for instance, it would be (as we provide
-  //   the user id as the key) req.session.passport.user = {id: 'xyz'}
   passport.serializeUser((user, done) => done(null, user.id));
-
-  // In deserializeUser that key is matched with the in memory array / database or any data resource.
-  // The fetched object is attached to the request object as req.user
 
   passport.deserializeUser(async (id, done) => {
     await pool.query(`SELECT * FROM production_user WHERE id = $1`, [id], async (err, results) => {

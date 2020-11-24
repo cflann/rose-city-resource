@@ -205,9 +205,47 @@ module.exports = (app, pool) => {
 
   /* Change password */
   /* TODO: add logic to make this work, so that if a user has a default password they are required to change it */
-  app.get('/admin/changePassword', userIsAuthenticated, (req, res) => {
-    res.render('changePassword.ejs');
+  app.get('/admin/settings', userIsAuthenticated, (req, res) => {
+    res.render('changePassword.ejs', { email: req.user.email });
   });
+
+  app.post('/admin/settings', userIsAuthenticated, (req, res) => {
+
+    const changePassword = async () => {
+      const email = req.user.email;
+      try {
+        const { currentPassword, newPass1, newPass2 } = req.body;
+        await bcrypt.compare(
+          currentPassword, req.user.password,
+          async (err, isMatch) => {
+            if (err) { 
+              req.flash('error', 'Incorrect password.'); // do i need the err object here?
+              return { message: 'Incorrect password. Please try again.'} } // and/or: req.flash('error', 'err');
+            if (isMatch) {
+              // get new passwords and make sure they match
+              if (newPass1 !== newPass2) {
+                req.flash('error', 'Passwords must match.')
+                return { message: 'Passwords must match.'}
+              } else {
+                // if everything checks out
+                // encrypt the new password
+                const newPassword = await bcrypt.hash(newPass1, 10);
+                // update pass in db
+                await pool.query(
+                  'UPDATE production_user SET password = $1 WHERE email = $2',
+                  [newPassword, email]
+                )
+              req.flash('success', 'Password has been updated');
+              }
+            }
+          });
+        } catch (err) {
+        console.log(err)
+      }
+    }
+    changePassword();
+  });
+    
 
   /* Logout */
   app.get("/admin/logout", (req, res) => {
@@ -222,7 +260,7 @@ module.exports = (app, pool) => {
       successRedirect: "/admin/dashboard",
       failureRedirect: "/admin/login",
       failureFlash: true
-    })
+    }),
   );
 
   /* Passport middleware function to protect routes */

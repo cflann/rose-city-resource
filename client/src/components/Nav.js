@@ -18,7 +18,7 @@ const NavDrawer = ({ navVisible, onClick }) => (
     {(status) => {
       return (
         <div className="navdrawer">
-          <NavLink
+          {/* <NavLink
             className="nav-drawer-item"
             activeClassName="nav-drawer-item-active"
             exact
@@ -35,7 +35,7 @@ const NavDrawer = ({ navVisible, onClick }) => (
             onClick={onClick}
           >
             SUGGEST UPDATE
-          </NavLink>
+          </NavLink> */}
         </div>
       );
     }}
@@ -81,7 +81,7 @@ class Nav extends React.Component {
               </NavLink>
             </div>
             <div className="spacer" />
-            <MediaQuery query="(min-width: 600px)">
+            {/* <MediaQuery query="(min-width: 600px)">
               <NavLink
                 className="nav-item"
                 exact
@@ -98,7 +98,7 @@ class Nav extends React.Component {
               >
                 SUGGEST UPDATE
               </NavLink>
-            </MediaQuery>
+            </MediaQuery> */}
             <MediaQuery query="(max-width: 599px)">
               <div className="hamburger-button">
                 <FontAwesomeIcon

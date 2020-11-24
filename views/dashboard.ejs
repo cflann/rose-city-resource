@@ -181,14 +181,15 @@
   <!-- Top Nav  -->
   <nav>
     <div style="padding-bottom: 10px; padding-top: 15px;">
-      <a href="/admin/changePassword" 
+      <a href="/admin/settings" 
         style="
         text-align: center;
         padding: 10px 16px;
         font-size: 17px;
         ">
         Change Password</a> |
-      <!-- if user is an admin, they can register new users   -->
+      <!-- if user is an admin, they can register new users
+          if not, this route is protected by code admin.js, and this link is hidden   -->
       <% if(userData && userData === "admin") { %>
         <span class="createUserSpan" id="createUserSpan" >
           <a href="/admin/register"
